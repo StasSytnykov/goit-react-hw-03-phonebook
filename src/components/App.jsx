@@ -14,11 +14,9 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    const savedContacts = localStorage.read(CONTACTS_KEY);
-    if (savedContacts)
-      this.setState({
-        contacts: savedContacts,
-      });
+    this.setState({
+      contacts: localStorage.read(CONTACTS_KEY),
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
