@@ -2,13 +2,31 @@ import { Component } from 'react';
 import { ContactsList } from './ContactsList';
 import { ContactForm } from './ContactForm';
 import { Filter } from './Filter';
+import * as localStorage from './utils/localStorage';
 import style from './AppContainer.module.css';
+
+const CONTACTS_KEY = 'contatcts';
 
 export class App extends Component {
   state = {
     contacts: [],
     filter: '',
   };
+
+  componentDidMount() {
+    const savedContacts = localStorage.read(CONTACTS_KEY);
+    if (savedContacts)
+      this.setState({
+        contacts: savedContacts,
+      });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+    if (contacts !== prevState.contacts) {
+      localStorage.save(CONTACTS_KEY, contacts);
+    }
+  }
 
   onAddContact = contact => {
     if (this.state.contacts.some(item => item.name === contact.name)) {

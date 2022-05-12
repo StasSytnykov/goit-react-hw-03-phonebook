@@ -14,12 +14,4 @@ const read = key => {
   }
 };
 
-const remove = key => {
-  try {
-    return localStorage.removeItem(key);
-  } catch (error) {
-    return null;
-  }
-};
-
-export { save, read, remove };
+export { save, read };
