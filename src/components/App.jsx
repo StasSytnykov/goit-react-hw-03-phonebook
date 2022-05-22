@@ -5,7 +5,7 @@ import { Filter } from './Filter';
 import * as localStorage from './utils/localStorage';
 import style from './AppContainer.module.css';
 
-const CONTACTS_KEY = 'contatcts';
+const CONTACTS_KEY = 'contacts';
 
 export class App extends Component {
   state = {
@@ -14,9 +14,11 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    this.setState({
-      contacts: localStorage.read(CONTACTS_KEY),
-    });
+    if (localStorage.read(CONTACTS_KEY)) {
+      this.setState({
+        contacts: localStorage.read(CONTACTS_KEY),
+      });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -51,9 +53,9 @@ export class App extends Component {
     const { filter, contacts } = this.state;
     const toLowerCaseFilter = filter.toLocaleLowerCase();
 
-    return contacts.filter(contact =>
-      contact.name.toLocaleLowerCase().includes(toLowerCaseFilter)
-    );
+    return contacts.filter(contact => {
+      return contact.name.toLocaleLowerCase().includes(toLowerCaseFilter);
+    });
   };
 
   render() {
